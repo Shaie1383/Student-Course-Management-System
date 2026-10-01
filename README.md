@@ -1,76 +1,134 @@
-# 🎓 Student Management System
+# Student Course Management System
 
-A Spring Boot REST API project for managing student records using CRUD operations. This project demonstrates Java, Spring Boot, Spring Data JPA, MySQL, validation, pagination, custom queries, and exception handling.
+A RESTful web application developed using Java and Spring Boot for managing student records. The application provides CRUD operations, search functionality, pagination, input validation, exception handling, and MySQL database integration.
 
----
+## Project Overview
 
-## 🚀 Features
+The Student Course Management System is designed to simplify the management of student information through REST APIs.
 
-- ➕ Add a new student
-- 📋 View all students
-- 🔍 View student by ID
-- ✏️ Update student details
-- ❌ Delete a student
-- 🏙️ Search students by city
-- 📚 Search students by course
-- 📄 Pagination support
-- ✅ Input validation
-- ⚠️ Global exception handling
-- 💾 MySQL database integration
+The application follows a layered architecture using:
 
----
+- Controller Layer
+- Service Layer
+- Repository Layer
+- Model Layer
+- Exception Handling Layer
 
-## 🛠️ Technologies Used
+The application uses Spring Data JPA for database operations and MySQL for persistent data storage.
 
-- Java 17+
-- Spring Boot 3.x
-- Spring Web
-- Spring Data JPA
-- MySQL
-- Maven
-- Jakarta Validation
-- Lombok (Optional)
-- STS 4 / Eclipse
-- MySQL Workbench
-- Git & GitHub
+## Features
 
----
+- Add a new student
+- View all students
+- View student details by ID
+- Update student information
+- Delete student records
+- Search students by city
+- Search students by course
+- Pagination for student records
+- Input validation
+- Global exception handling
+- MySQL database integration
+- RESTful API architecture
 
-## 📂 Project Structure
+## Technologies Used
 
+| Technology | Purpose |
+|------------|---------|
+| Java 17 | Application development |
+| Spring Boot | Backend application framework |
+| Spring Web | REST API development |
+| Spring Data JPA | Database interaction |
+| MySQL | Relational database |
+| Maven | Build and dependency management |
+| Jakarta Validation | Input validation |
+| Lombok | Reducing boilerplate code |
+| Postman | API testing |
+| Git & GitHub | Version control |
+
+## Project Structure
+
+```text
+StudentManagementSystem
+│
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+│   │   │       └── shaista
+│   │   │           └── studentmanagement
+│   │   │               │
+│   │   │               ├── StudentManagementApplication.java
+│   │   │               │
+│   │   │               ├── controller
+│   │   │               │   └── StudentController.java
+│   │   │               │
+│   │   │               ├── service
+│   │   │               │   └── StudentService.java
+│   │   │               │
+│   │   │               ├── repository
+│   │   │               │   └── StudentRepository.java
+│   │   │               │
+│   │   │               ├── model
+│   │   │               │   └── Student.java
+│   │   │               │
+│   │   │               └── exception
+│   │   │                   ├── StudentNotFoundException.java
+│   │   │                   ├── ErrorResponse.java
+│   │   │                   └── GlobalExceptionHandler.java
+│   │   │
+│   │   └── resources
+│   │       └── application.properties
+│   │
+│   └── test
+│       └── java
+│           └── com
+│               └── shaista
+│                   └── studentmanagement
+│                       └── StudentManagementApplicationTests.java
+│
+├── .gitignore
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+└── README.md
 ```
-StudentManagement
-│
-├── controller
-│      StudentController.java
-│
-├── service
-│      StudentService.java
-│
-├── repository
-│      StudentRepository.java
-│
-├── model
-│      Student.java
-│
-├── exception
-│      StudentNotFoundException.java
-│      ErrorResponse.java
-│      GlobalExceptionHandler.java
-│
-├── resources
-│      application.properties
-│
-└── StudentManagementApplication.java
+Application Architecture
+The application follows a layered architecture:
+```text
+Client / Postman
+       |
+       v
+Controller
+       |
+       v
+Service
+       |
+       v
+Repository
+       |
+       v
+MySQL Database
 ```
+## Controller Layer
+Handles HTTP requests and exposes REST API endpoints.
+## Service Layer
+Contains the application logic and coordinates operations between the controller and repository.
+## Repository Layer
+Uses Spring Data JPA to perform database operations.
+## Model Layer
+Defines the student entity and its database representation.
+## Exception Layer
+Handles application errors and provides structured error responses.
+## Database Configuration
+Create a MySQL database:
+CREATE DATABASE studentdb;
 
----
+Configure the database connection in:
+src/main/resources/application.properties
 
-## 🗄️ Database Configuration
-
-Update `application.properties` with your MySQL credentials.
-
-```properties
+Example:
+```java
 spring.datasource.url=jdbc:mysql://localhost:3306/studentdb
 spring.datasource.username=root
 spring.datasource.password=your_password
@@ -79,106 +137,130 @@ spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 ```
+Replace your_password with your local MySQL password.
+REST API Endpoints
+```
+Method	Endpoint	Description
+GET	/students	Retrieve all students
+GET	/students/{id}	Retrieve a student by ID
+POST	/students	Add a new student
+PUT	/students/{id}	Update student details
+DELETE	/students/{id}	Delete a student
+GET	/students/city/{city}	Search students by city
+GET	/students/course/{course}	Search students by course
+GET	/students/page?page=0&size=5	Retrieve students using pagination
+```
 
----
+Sample API Request
+Add Student
+POST
+http://localhost:8080/students
 
-## 📌 REST API Endpoints
-
-| Method | Endpoint | Description |
-|---------|----------|-------------|
-| GET | `/students` | Get all students |
-| GET | `/students/{id}` | Get student by ID |
-| POST | `/students` | Add a student |
-| PUT | `/students/{id}` | Update student |
-| DELETE | `/students/{id}` | Delete student |
-| GET | `/students/city/{city}` | Search by city |
-| GET | `/students/course/{course}` | Search by course |
-| GET | `/students/page?page=0&size=5` | Get students with pagination |
-
----
-
-## 📥 Sample JSON Request
-
-```json
+Request body:
 {
-  "name": "Vedika Pawade",
-  "age": 21,
-  "course": "Computer Science",
-  "city": "Nagpur"
+    "name": "Ananya Sharma",
+    "age": 21,
+    "course": "Computer Science",
+    "city": "Chennai"
 }
-```
 
----
+Get All Students
+GET
+http://localhost:8080/students
 
-## ▶️ How to Run
+Get Student by ID
+GET
+http://localhost:8080/students/1
 
+Update Student
+PUT
+http://localhost:8080/students/1
+
+Delete Student
+DELETE
+http://localhost:8080/students/1
+
+How to Run the Project
+Prerequisites
+Make sure the following are installed:
+- Java 17 or later
+- MySQL
+- Maven or Maven Wrapper
+- Postman
+- Git
+Steps
 1. Clone the repository
+git clone https://github.com/YOUR_USERNAME/student-course-management-system.git
 
-```bash
-git clone https://github.com/vedikapawade/StudentManagementSystem.git
-```
-
-2. Open the project in STS or Eclipse.
-
-3. Configure MySQL in `application.properties`.
-
-4. Create the database:
-
-```sql
+2. Open the project
+Open the project using IntelliJ IDEA, Eclipse, Spring Tool Suite, or VS Code.
+3. Configure MySQL
+Create the database:
 CREATE DATABASE studentdb;
-```
 
-5. Run the project as a Spring Boot Application.
+Update the MySQL username and password in:
+src/main/resources/application.properties
 
-6. Test the REST APIs using Postman.
+4. Build the project
+Using Maven Wrapper:
+.\mvnw.cmd clean install
 
----
+5. Run the application
+.\mvnw.cmd spring-boot:run
 
-## 📸 API Testing
+The application will start on:
+http://localhost:8080
 
-Example:
+6. Test the APIs
+Use Postman to send requests to the available REST endpoints.
+Testing
+The project includes Spring Boot test support for verifying application functionality.
+Run the tests using:
+.\mvnw.cmd test
 
-```
-GET http://localhost:8080/students
-```
+The test configuration verifies that the Spring application context loads successfully.
+Error Handling
+The application includes centralized exception handling for cases such as requesting a student record that does not exist.
+The exception handling structure includes:
+StudentNotFoundException
+ErrorResponse
+GlobalExceptionHandler
 
-```
-POST http://localhost:8080/students
-```
+This helps provide consistent error responses from the REST API.
+Learning Outcomes
+Through this project, I gained practical experience in:
+- Java application development
+- Spring Boot
+- REST API development
+- Object-Oriented Programming
+- Spring Data JPA
+- MySQL database integration
+- CRUD operations
+- Input validation
+- Exception handling
+- Pagination
+- Maven project management
+- API testing with Postman
+- Git and GitHub
+- Layered application architecture
+Future Enhancements
+Possible improvements for future versions include:
+- Spring Security authentication
+- JWT-based authentication
+- Role-based access control
+- Swagger/OpenAPI documentation
+- Sorting and advanced filtering
+- Docker containerization
+- Additional unit and integration tests
+Author
+Shaista Mulla
+B.Tech Computer Science and Engineering (AI & ML)
+Rajeev Gandhi Memorial College of Engineering and Technology (RGMCET), JNTUA
+Connect with Me
+- LinkedIn: https://www.linkedin.com/in/shaista-mulla-505741280/
+- GitHub: https://github.com/Shaie1383/
+- Portfolio: https://portfolio-shaista.netlify.app/
+License
+This project is developed for learning and academic purposes.
 
-```
-PUT http://localhost:8080/students/1
-```
-
-```
-DELETE http://localhost:8080/students/1
-```
-
----
-
-## 🔮 Future Enhancements
-
-- JWT Authentication
-- Spring Security
-- Swagger/OpenAPI Documentation
-- Role-Based Access Control
-- Caching
-- Sorting and Filtering
-- Docker Support
-- Unit and Integration Testing
-
----
-
-## 👩‍💻 Author
-
-**Vedika Pawade**
-
-- B.Tech Computer Science Engineering
-- Java Full Stack Developer
-- Spring Boot | MySQL | REST API
-
----
-
-## 📄 License
-
-This project is developed for learning purposes and academic use.
+update the README so it accurately reflects **your modified version**, and we can make the GitHub repository look like a proper fresher Java project.
